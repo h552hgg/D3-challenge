@@ -30,7 +30,7 @@ d3.csv("data.csv").then(function (healthData) {
     // console.log(healthData)
 
     healthData.forEach(function (data) {
-        data.state = +data.state;
+        data.state = +data.abbr;
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
 
@@ -62,15 +62,48 @@ d3.csv("data.csv").then(function (healthData) {
     chartGroup.append("g")
         .call(leftAxis);
     // =================================
+
+
     var circlesGroup = chartGroup.selectAll("circle")
         .data(healthData)
         .enter()
         .append("circle")
         .attr("cx", d => xLinearScale(d.poverty))
         .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", "15")
-        .attr("fill", "grey")
-        .attr("opacity", ".5");
+        .attr("r", "18")
+        .attr("fill", "darkgrey")
+        .attr("opacity", ".8");
+    // circlesGroup.append("text")
+    //     .attr("text-anchor", "middle")
+    //     .html(function (d) {
+    //         return (`${d.abbr}`);
+
+    //     });
+
+
+
+
+    // =================================
+    var toolTip = d3.tip()
+        .attr("class", "tooltip")
+        .attr("text-anchor", "middle")
+        .html(function (d) {
+            return (`${d.abbr}`);
+
+        });
+
+    // =================================
+    chartGroup.call(toolTip);
+
+    // =================================
+    circlesGroup.on("click", function (data) {
+        toolTip.show(data, this);
+    })
+    // // onmouseout event
+    // .on("mouseout", function (data, index) {
+    //     toolTip.hide(data);
+    // });
+
 
 
 
