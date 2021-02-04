@@ -40,7 +40,7 @@ d3.csv("data.csv").then(function (healthData) {
     // =================================
 
     var xLinearScale = d3.scaleLinear()
-        .domain([20, d3.max(healthData, d => d.poverty)])
+        .domain([20, d3.max(healthData, d => [d.poverty])])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
