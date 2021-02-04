@@ -33,6 +33,7 @@ d3.csv("data.csv").then(function (healthData) {
         data.state = +data.abbr;
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
+        data.age = +data.age;
 
 
     });
@@ -46,10 +47,14 @@ d3.csv("data.csv").then(function (healthData) {
     var yLinearScale = d3.scaleLinear()
         .domain([0, d3.max(healthData, d => d.healthcare)])
         .range([height, 0]);
+    var yLinearScale1 = d3.scaleLinear()
+        .domain([0, d3.max(healthData, d => d.age)])
+        .range([height, 0]);
 
     // =================================
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
+    var rightAxis = d3.axisRight(yLinearScale1);
 
 
 
@@ -61,6 +66,8 @@ d3.csv("data.csv").then(function (healthData) {
 
     chartGroup.append("g")
         .call(leftAxis);
+    // addition axis
+    chartGroup.append("g").attr("transform", `translate(${width}, 0)`).call(rightAxis)
     // =================================
 
 
@@ -73,7 +80,9 @@ d3.csv("data.csv").then(function (healthData) {
         .attr("r", "18")
         .attr("fill", "darkgrey")
         .attr("opacity", ".8");
-    // circlesGroup.append("text")
+    // circlesGroup.append("html")
+    //     .attr("x", 0)
+    //     .attr("dy", ".35em")
     //     .attr("text-anchor", "middle")
     //     .html(function (d) {
     //         return (`${d.abbr}`);
@@ -114,6 +123,14 @@ d3.csv("data.csv").then(function (healthData) {
         .attr("dy", "1em")
         .attr("class", "axisText")
         .text("Lacks Healthcare(%)");
+    //// Add age axis label
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", width - (margin.right - 60))
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("class", "axisText")
+        .text("Age");
 
     chartGroup.append("text")
         .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
