@@ -77,42 +77,35 @@ d3.csv("data.csv").then(function (healthData) {
         .append("circle")
         .attr("cx", d => xLinearScale(d.poverty))
         .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", "18")
+        .attr("r", "20")
         .attr("fill", "darkgrey")
-        .attr("opacity", ".8");
-    // circlesGroup.append("html")
-    //     .attr("x", 0)
-    //     .attr("dy", ".35em")
-    //     .attr("text-anchor", "middle")
-    //     .html(function (d) {
-    //         return (`${d.abbr}`);
+        .attr("opacity", ".8")
 
-    //     });
+    // chartGroup
+    //     .selectAll('text')
+    //     .data(healthData)
+    //     .enter()
+    //     .append('text')
+    //     .text(function (d) {
+    //         return d.abbr
+    //     })
+    //     .attr('dx', d => xLinearScale(d.poverty))
+    //     .attr('dy', d => yLinearScale(d.healthcare))
+    var circleText = chartGroup
+        .selectAll('g circle text')
+        .data(healthData)
+        .enter()
+        .append('text')
+        .attr("font-size", 14)
+        .text(function (d) {
+            return d.abbr
+        })
+        .attr('dx', d => xLinearScale(0.07 + d.poverty))
+        .attr('dy', d => yLinearScale(d.healthcare - 0.1))
 
 
-
-
-    // =================================
-    var toolTip = d3.tip()
-        .attr("class", "tooltip")
-        .attr("text-anchor", "middle")
-        .html(function (d) {
-            return (`${d.abbr}`);
-
-        });
-
-    // =================================
-    chartGroup.call(toolTip);
-
-    // =================================
-    circlesGroup.on("click", function (data) {
-        toolTip.show(data, this);
-    })
-    // // onmouseout event
-    // .on("mouseout", function (data, index) {
-    //     toolTip.hide(data);
-    // });
-
+    // // =================================
+    chartGroup.call(circleText);
 
 
 
