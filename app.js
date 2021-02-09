@@ -91,7 +91,7 @@ d3.csv("data.csv").then(function (healthData) {
     //     })
     //     .attr('dx', d => xLinearScale(d.poverty))
     //     .attr('dy', d => yLinearScale(d.healthcare))
-    var circleText = chartGroup
+    chartGroup
         .selectAll('g circle text')
         .data(healthData)
         .enter()
@@ -105,7 +105,7 @@ d3.csv("data.csv").then(function (healthData) {
 
 
     // // =================================
-    chartGroup.call(circleText);
+
 
 
 
