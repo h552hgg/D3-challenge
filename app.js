@@ -41,7 +41,7 @@ d3.csv("data.csv").then(function (healthData) {
     // =================================
 
     var xLinearScale = d3.scaleLinear()
-        .domain([20, d3.max(healthData, d => [d.poverty])])
+        .domain([22, d3.max(healthData, d => [d.poverty])])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
@@ -77,31 +77,21 @@ d3.csv("data.csv").then(function (healthData) {
         .append("circle")
         .attr("cx", d => xLinearScale(d.poverty))
         .attr("cy", d => yLinearScale(d.healthcare))
-        .attr("r", "20")
+        .attr("r", "16")
         .attr("fill", "darkgrey")
         .attr("opacity", ".8")
 
-    // chartGroup
-    //     .selectAll('text')
-    //     .data(healthData)
-    //     .enter()
-    //     .append('text')
-    //     .text(function (d) {
-    //         return d.abbr
-    //     })
-    //     .attr('dx', d => xLinearScale(d.poverty))
-    //     .attr('dy', d => yLinearScale(d.healthcare))
     chartGroup
         .selectAll('g circle text')
         .data(healthData)
         .enter()
         .append('text')
-        .attr("font-size", 14)
+        .attr("font-size", 10)
         .text(function (d) {
             return d.abbr
         })
-        .attr('dx', d => xLinearScale(0.07 + d.poverty))
-        .attr('dy', d => yLinearScale(d.healthcare - 0.1))
+        .attr('dx', d => xLinearScale(0.09 + d.poverty))
+        .attr('dy', d => yLinearScale(d.healthcare - 0.25))
 
 
     // // =================================
